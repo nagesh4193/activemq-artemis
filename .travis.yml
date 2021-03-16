@@ -2,23 +2,23 @@ language: java
 install: true
 matrix:
   include:
-    - os: linux
-      jdk: openjdk8
-      env:
-        - EXAMPLES_PROFILE="release"
+#    - os: linux
+#      jdk: openjdk8
+#      env:
+#        - EXAMPLES_PROFILE="release"
     - arch: ppc64le
       os: linux
       jdk: openjdk8
       env:
         - EXAMPLES_PROFILE="release"
-    - os: linux
-      jdk: openjdk11
-      env:
-        - EXAMPLES_PROFILE="noRun"
-    - os: linux
-      jdk: openjdk14
-      env:
-        - EXAMPLES_PROFILE="noRun"
+#    - os: linux
+#      jdk: openjdk11
+#      env:
+#        - EXAMPLES_PROFILE="noRun"
+#    - os: linux
+#      jdk: openjdk14
+#      env:
+#        - EXAMPLES_PROFILE="noRun"
 
 # clean out Artemis artifacts from the cache
 before_install:
@@ -29,6 +29,7 @@ before_install:
     curl https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz|tar -xz --strip 1 -C /opt/maven;
     export MAVEN_HOME=/opt/maven
     export PATH=${MAVEN_HOME}/bin:${PATH}
+    sed '/3.0.1/ a <configuration>\n<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>\n</configuration>' pom.xml > tmp && mv tmp pom.xml
   fi
 
 # use 'install' so smoke-tests will work
