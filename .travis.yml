@@ -25,11 +25,11 @@ before_install:
 - rm -rf $HOME/.m2/repository/org/apache/activemq/artemis-*
 - |
   if [[ "$TRAVIS_CPU_ARCH" = "ppc64le" ]]; then 
+    sed '/3.0.1/ a <configuration>\n<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>\n</configuration>' pom.xml > tmp && mv tmp pom.xml;
     mkdir -p /opt/maven;
     curl https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz|tar -xz --strip 1 -C /opt/maven;
     export MAVEN_HOME=/opt/maven
     export PATH=${MAVEN_HOME}/bin:${PATH}
-    sed '/3.0.1/ a <configuration>\n<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>\n</configuration>' pom.xml > tmp && mv tmp pom.xml
   fi
 
 # use 'install' so smoke-tests will work
